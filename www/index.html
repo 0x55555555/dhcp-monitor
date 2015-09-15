@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+    <head>
+        <title>DHCP Info</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <style>
+            .mono { color: #666; font-family: Menlo, Monaco, Consolas, "Courier New", monospace; }
+            .c { color: #000; }
+            h4 { font-weight: 300; color: #555; }
+        </style>
+    </head>
+    <body>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>DHCP information. There are <strong class="c"><span id="devices">0</span> devices</strong> connected now.</h4>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>IP</th>
+                        <th>Hostname</th>
+                        <th>MAC address</th>
+                        <th>MAC manufacturer</th>
+                    </tr>
+                </thead>
+                <tbody id="clients">
+                </tbody>
+            </table>
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script>
+            var knownmacs = {};
+            var update = function(){
+                $.get( 'data/', function(data) {
+                    var leases = data;
+                    // Remove previous info
+                    $('#clients').html('');
+                    var totaldevices = 0;
+                    for (ip in data) {
+                        var ipinfo = data[ip];
+                        $('#clients').append('<tr>'+
+                            '<td>'+ip+'</td>'+
+                            '<td>'+(ipinfo['client-hostname']||'-')+'</td>'+
+                            '<td class="mono">'+(ipinfo['hardware ethernet']||'-').toUpperCase()+'</td>'+
+                            '<td class="mac-manufacturer" data-mac="'+(ipinfo['hardware ethernet']||'-').toUpperCase()+'"></td>'+
+                        '</tr>');
+                        totaldevices += (ipinfo['client-hostname']) ? 1 : 0;
+                    }
+                    $('#devices').html(totaldevices);
+                    $('.mac-manufacturer').each(function(){
+                        var elem = $(this);
+                        var mac = elem.attr('data-mac');
+                        if (typeof knownmacs[mac] != 'undefined')
+                            elem.html(knownmacs[mac]);
+                        else
+                            $.get('getmac/'+mac, function(data){
+                                elem.html(data);
+                                known_macs[mac] = data;
+                            });
+                    });
+                });
+            };
+            $(document).ready(function(){
+                update();
+                var t = setInterval(update, 30000);
+            });
+        </script>
+    </body>
+</html>
