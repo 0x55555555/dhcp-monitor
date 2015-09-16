@@ -1,13 +1,14 @@
 var express = require('express');
-var httpProxy = require('http-proxy');
+var request = require('request');
 var app = express();
 
 app.use(express.static('www'));
 
-var apiProxy = httpProxy.createProxyServer();
-
-app.get("/getmac/*", function(req, res){
-  apiProxy.web(req, res, { target: 'http://api.macvendors.com/' + req.query.mac });
+app.get("/getmac", function(req, res){
+  request.get('http://api.macvendors.com/' + req.query.mac, function (error, response, body) {
+    console.log (body);
+    res.end(body);
+  });
 });
 
 app.get('/data', function (req, res) {

@@ -5,7 +5,8 @@
   "main": "server.js",
   "dependencies": {
     "dhcpd-leases": "0.0.1",
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "request": "*"
   },
   "devDependencies": {},
   "scripts": {
