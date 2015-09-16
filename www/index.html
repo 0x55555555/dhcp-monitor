@@ -60,7 +60,7 @@
                         if (typeof knownmacs[mac] != 'undefined')
                             elem.html(knownmacs[mac]);
                         else
-                            $.get('http://api.macvendors.com/'+mac, function(data){
+                            $.get('getmac/?mac='+mac, function(data){
                                 elem.html(data);
                                 known_macs[mac] = data;
                             });
