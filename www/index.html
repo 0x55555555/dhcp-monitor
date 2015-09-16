@@ -61,7 +61,7 @@
                         var ipinfo = data[ip];
                         $('#clients').append('<tr>'+
                             '<td>'+ip+'</td>'+
-                            '<td>'+(ipinfo['client-hostname']||'-')+'</td>'+
+                            '<td class="hostname" data-ip="'+ip+'">'+(ipinfo['client-hostname']||'-')+'</td>'+
                             '<td class="ping" data-ip="'+ip+'"></td>'+
                             '<td class="mono">'+(ipinfo['hardware ethernet']||'-').toUpperCase()+'</td>'+
                             '<td class="mac-manufacturer" data-mac="'+(ipinfo['hardware ethernet']||'-').toUpperCase()+'"></td>'+
@@ -69,6 +69,13 @@
                         totaldevices += (ipinfo['client-hostname']) ? 1 : 0;
                     }
                     $('#devices').html(totaldevices);
+                    $('.hostname').each(function(){
+                        var elem = $(this);
+                        var ip = elem.attr('data-ip');
+                        $.get('dns?ip='+ip, function(data){
+                            elem.html(dns);
+                        });
+                    });
                     $('.mac-manufacturer').each(function(){
                         var elem = $(this);
                         var mac = elem.attr('data-mac');

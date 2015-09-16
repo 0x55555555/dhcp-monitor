@@ -1,6 +1,7 @@
 var express = require('express');
 var macvendor = require('macvendor');
-var ping = require ("net-ping");
+var ping = require("net-ping");
+var dns = require("dns");
 var app = express();
 
 app.use(express.static('www'));
@@ -17,6 +18,19 @@ app.get("/ping", function(req, res){
     }
 
     res.end("alive");
+  });
+});
+
+app.get("/dns", function(req, res){
+  var ip = req.query.ip;
+
+  dns.reverse(ip, function(err, hostnames) {
+    if (err) {
+      res.end("");
+      return;
+    }
+
+    res.end(hostnames[0]);
   });
 });
 
