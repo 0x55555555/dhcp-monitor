@@ -6,7 +6,8 @@
   "dependencies": {
     "dhcpd-leases": "0.0.1",
     "express": "^4.13.3",
-    "macvendor": "*"
+    "macvendor": "*",
+    "net-ping": "^1.1.11"
   },
   "devDependencies": {},
   "scripts": {

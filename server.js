@@ -1,9 +1,24 @@
 var express = require('express');
-var request = require('request');
 var macvendor = require('macvendor');
+var ping = require ("net-ping");
 var app = express();
 
 app.use(express.static('www'));
+
+app.get("/ping", function(req, res){
+  var ip = req.query.ip;
+
+  var session = ping.createSession();
+  session.pingHost (ip, function (error, target, sent, rcvd) {
+    if (error) {
+      res.end(error.message);
+      return;
+    }
+
+    var ms = rcvd - sent;
+    res.end(ms.toString() + "ms");
+  });
+});
 
 app.get("/getmac", function(req, res){
   macvendor(req.query.mac, function(err, vendor) {
