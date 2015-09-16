@@ -7,6 +7,19 @@
             .mono { color: #666; font-family: Menlo, Monaco, Consolas, "Courier New", monospace; }
             .c { color: #000; }
             h4 { font-weight: 300; color: #555; }
+            .blob {
+              width: 20px;
+              height: 20px;
+              border: 2px solid white;
+              border-radius: 10px;
+              box-shadow: lightgray 0px 3px 10px;
+            }
+            .dead {
+              background: linear-gradient(pink, red);
+            }
+            .alive {
+              background: linear-gradient(greenyellow, green);
+            }
         </style>
     </head>
     <body>
@@ -71,7 +84,7 @@
                         var elem = $(this);
                         var ip = elem.attr('data-ip');
                         $.get('ping?ip='+ip, function(data){
-                            elem.html("<div class=\"" + data + "\"></div>");
+                            elem.html("<div class=\"blob " + data + "\"></div>");
                         });
                     });
                 });
