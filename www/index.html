@@ -19,6 +19,7 @@
                     <tr>
                         <th>IP</th>
                         <th>Hostname</th>
+                        <th>Ping</th>
                         <th>MAC address</th>
                         <th>MAC manufacturer</th>
                     </tr>
@@ -48,6 +49,7 @@
                         $('#clients').append('<tr>'+
                             '<td>'+ip+'</td>'+
                             '<td>'+(ipinfo['client-hostname']||'-')+'</td>'+
+                            '<td class="ping" data-ip="'+ip+'"></td>'+
                             '<td class="mono">'+(ipinfo['hardware ethernet']||'-').toUpperCase()+'</td>'+
                             '<td class="mac-manufacturer" data-mac="'+(ipinfo['hardware ethernet']||'-').toUpperCase()+'"></td>'+
                         '</tr>');
@@ -64,6 +66,13 @@
                                 elem.html(data);
                                 known_macs[mac] = data;
                             });
+                    });
+                    $('.ping').each(function(){
+                        var elem = $(this);
+                        var ip = elem.attr('data-ip');
+                        $.get('ping?ip='+ip, function(data){
+                            elem.html(data);
+                        });
                     });
                 });
             };
