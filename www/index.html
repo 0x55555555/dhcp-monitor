@@ -33,10 +33,16 @@
             var update = function(){
                 $.get( 'data/', function(data) {
                     var leases = data;
+                    var ips = [];
+                    for (ip in data) {
+                      ips.push(ip);
+                    }
+                    ips.sort();
+
                     // Remove previous info
                     $('#clients').html('');
                     var totaldevices = 0;
-                    for (ip in data) {
+                    for (ip in ips) {
                         var ipinfo = data[ip];
                         $('#clients').append('<tr>'+
                             '<td>'+ip+'</td>'+
