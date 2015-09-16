@@ -1,13 +1,14 @@
 var express = require('express');
 var request = require('request');
+var macvendor = require('macvendor');
 var app = express();
 
 app.use(express.static('www'));
 
 app.get("/getmac", function(req, res){
-  request.get('http://api.macvendors.com/' + req.query.mac, function (error, response, body) {
-    console.log (body);
-    res.end(body);
+  macvendor(req.query.mac, function(err, vendor) {
+    console.log (vendor);
+    res.end(vendor);
   });
 });
 

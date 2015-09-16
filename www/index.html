@@ -60,7 +60,7 @@
                         if (typeof known_macs[mac] != 'undefined')
                             elem.html(known_macs[mac]);
                         else
-                            $.get('getmac/?mac='+mac, function(data){
+                            $.get('getmac?mac='+mac, function(data){
                                 elem.html(data);
                                 known_macs[mac] = data;
                             });
