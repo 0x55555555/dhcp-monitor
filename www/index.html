@@ -42,7 +42,8 @@
                     // Remove previous info
                     $('#clients').html('');
                     var totaldevices = 0;
-                    for (ip in ips) {
+                    for (ip_id in ips) {
+                        var ip = ips[ip_id];
                         var ipinfo = data[ip];
                         $('#clients').append('<tr>'+
                             '<td>'+ip+'</td>'+
