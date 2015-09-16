@@ -8,15 +8,15 @@ app.use(express.static('www'));
 app.get("/ping", function(req, res){
   var ip = req.query.ip;
 
-  var session = ping.createSession();
-  session.pingHost (ip, function (error, target, sent, rcvd) {
+  var sys = require('sys')
+  var exec = require('child_process').exec;
+  function puts(error, stdout, stderr) { sys.puts(stdout) }
+  exec("ping -c 1 " + ip, function(error, stdout, stderr) {
     if (error) {
-      res.end(error.message);
-      return;
+      res.end("Dead");
     }
 
-    var ms = rcvd - sent;
-    res.end(ms.toString() + "ms");
+    res.end("Alive");
   });
 });
 
