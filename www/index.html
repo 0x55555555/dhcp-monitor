@@ -57,8 +57,8 @@
                     $('.mac-manufacturer').each(function(){
                         var elem = $(this);
                         var mac = elem.attr('data-mac');
-                        if (typeof knownmacs[mac] != 'undefined')
-                            elem.html(knownmacs[mac]);
+                        if (typeof known_macs[mac] != 'undefined')
+                            elem.html(known_macs[mac]);
                         else
                             $.get('getmac/?mac='+mac, function(data){
                                 elem.html(data);
