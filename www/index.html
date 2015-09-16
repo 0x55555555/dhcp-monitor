@@ -73,7 +73,7 @@
                         var elem = $(this);
                         var ip = elem.attr('data-ip');
                         $.get('dns?ip='+ip, function(data){
-                            elem.html(dns);
+                            elem.html(data);
                         });
                     });
                     $('.mac-manufacturer').each(function(){
