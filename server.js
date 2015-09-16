@@ -13,16 +13,15 @@ app.get("/ping", function(req, res){
   function puts(error, stdout, stderr) { sys.puts(stdout) }
   exec("ping -c 1 " + ip, function(error, stdout, stderr) {
     if (error) {
-      res.end("Dead");
+      res.end("dead");
     }
 
-    res.end("Alive");
+    res.end("alive");
   });
 });
 
 app.get("/getmac", function(req, res){
   macvendor(req.query.mac, function(err, vendor) {
-    console.log (vendor);
     res.end(vendor);
   });
 });

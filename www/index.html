@@ -71,14 +71,14 @@
                         var elem = $(this);
                         var ip = elem.attr('data-ip');
                         $.get('ping?ip='+ip, function(data){
-                            elem.html(data);
+                            elem.html("<div class=\"" + data + "\"></div>");
                         });
                     });
                 });
             };
             $(document).ready(function(){
                 update();
-                var t = setInterval(update, 30000);
+                var t = setInterval(update, 300000);
             });
         </script>
     </body>
